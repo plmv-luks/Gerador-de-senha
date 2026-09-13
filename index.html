@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerador de Senha</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="card">
+    <h1>Gerador de Senha</h1>
+
+    <div class="modos">
+      <button type="button" id="btnModoSenha" class="modo ativo" aria-pressed="true">Senha</button>
+      <button type="button" id="btnModoFrase" class="modo" aria-pressed="false">Frase</button>
+    </div>
+
+    <div class="saida">
+      <input type="text" id="campoSenha" readonly placeholder="clique em gerar...">
+      <button id="btnCopiar" title="copiar">copiar</button>
+    </div>
+    <p id="avisoCopiado" class="aviso-copiado">copiado</p>
+
+    <div class="forca">
+      <div id="barraForca" class="barra"></div>
+    </div>
+    <span id="labelForca" class="label-forca"></span>
+
+    <section id="painelSenha">
+      <div class="opcao opcao-tamanho">
+        <label for="tamanho">Tamanho: <span id="valorTamanho">16</span></label>
+        <input type="range" id="tamanho" min="4" max="64" value="16">
+      </div>
+
+      <div class="linha-tipo">
+        <label><input type="checkbox" id="maiusculas" checked> Maiúsculas (A-Z)</label>
+        <input type="number" id="minMaiusculas" class="campo-min" min="0" value="1" title="mínimo de maiúsculas">
+      </div>
+      <div class="linha-tipo">
+        <label><input type="checkbox" id="minusculas" checked> Minúsculas (a-z)</label>
+        <input type="number" id="minMinusculas" class="campo-min" min="0" value="1" title="mínimo de minúsculas">
+      </div>
+      <div class="linha-tipo">
+        <label><input type="checkbox" id="numeros" checked> Números (0-9)</label>
+        <input type="number" id="minNumeros" class="campo-min" min="0" value="1" title="mínimo de números">
+      </div>
+      <div class="linha-tipo">
+        <label><input type="checkbox" id="simbolos" checked> Símbolos (!@#$%...)</label>
+        <input type="number" id="minSimbolos" class="campo-min" min="0" value="1" title="mínimo de símbolos">
+      </div>
+
+      <div class="opcao">
+        <label><input type="checkbox" id="semAmbiguos"> Evitar caracteres parecidos (l, 1, O, 0)</label>
+      </div>
+
+      <div class="opcao opcao-texto">
+        <label for="campoIncluir">Incluir caracteres extras</label>
+        <input type="text" id="campoIncluir" placeholder="ex: áé#">
+      </div>
+      <div class="opcao opcao-texto">
+        <label for="campoExcluir">Nunca usar estes caracteres</label>
+        <input type="text" id="campoExcluir" placeholder="ex: {}[]">
+      </div>
+    </section>
+
+    <section id="painelFrase" hidden>
+      <div class="opcao opcao-tamanho">
+        <label for="qtdPalavras">Palavras: <span id="valorQtdPalavras">4</span></label>
+        <input type="range" id="qtdPalavras" min="2" max="8" value="4">
+      </div>
+
+      <div class="opcao">
+        <label for="separador">Separador</label>
+        <select id="separador">
+          <option value="-">hífen (-)</option>
+          <option value=".">ponto (.)</option>
+          <option value=" ">espaço</option>
+        </select>
+      </div>
+
+      <div class="opcao">
+        <label><input type="checkbox" id="numeroFinal" checked> Acrescentar número no final</label>
+      </div>
+    </section>
+
+    <button id="btnGerar" class="btn-gerar">Gerar</button>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

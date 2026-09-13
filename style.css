@@ -1,0 +1,222 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f2f1ed;
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  color: #26261f;
+  padding: 24px;
+}
+
+.card {
+  width: 100%;
+  max-width: 420px;
+  background: #ffffff;
+  border: 1px solid #d8d6cc;
+  border-radius: 6px;
+  padding: 24px;
+}
+
+h1 {
+  margin: 0 0 18px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.modos {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+
+.modo {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #d8d6cc;
+  border-radius: 4px;
+  background: #f2f1ed;
+  color: #26261f;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.modo.ativo {
+  background: #3f6b4a;
+  border-color: #3f6b4a;
+  color: #fff;
+}
+
+.saida {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+#campoSenha {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: 4px;
+  border: 1px solid #d8d6cc;
+  background: #f9f8f4;
+  color: #26261f;
+  font-size: 15px;
+  font-family: 'Courier New', monospace;
+  min-width: 0;
+}
+
+#btnCopiar {
+  padding: 0 14px;
+  border: 1px solid #d8d6cc;
+  border-radius: 4px;
+  background: #fff;
+  color: #26261f;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+#btnCopiar:hover {
+  background: #f2f1ed;
+}
+
+.aviso-copiado {
+  height: 14px;
+  margin: 4px 0 14px;
+  font-size: 12px;
+  color: #3f6b4a;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.aviso-copiado.show {
+  opacity: 1;
+}
+
+.forca {
+  height: 5px;
+  border-radius: 3px;
+  background: #eceae2;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+
+.barra {
+  height: 100%;
+  width: 0%;
+  transition: width 0.2s, background 0.2s;
+}
+
+.label-forca {
+  display: block;
+  font-size: 12px;
+  color: #6b6a5f;
+  margin-bottom: 18px;
+}
+
+.opcao {
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.opcao label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.opcao-tamanho label,
+.opcao-texto label {
+  display: block;
+  margin-bottom: 6px;
+  cursor: default;
+}
+
+#valorTamanho,
+#valorQtdPalavras {
+  color: #3f6b4a;
+  font-weight: 600;
+}
+
+.linha-tipo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.linha-tipo label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.campo-min {
+  width: 46px;
+  padding: 4px 6px;
+  border: 1px solid #d8d6cc;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 13px;
+}
+
+.campo-min:disabled {
+  opacity: 0.4;
+}
+
+.opcao-texto input[type="text"] {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #d8d6cc;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+select#separador {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #d8d6cc;
+  border-radius: 4px;
+  font-size: 13px;
+  background: #fff;
+}
+
+input[type="range"] {
+  width: 100%;
+  accent-color: #3f6b4a;
+}
+
+input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+  accent-color: #3f6b4a;
+}
+
+.btn-gerar {
+  width: 100%;
+  margin-top: 6px;
+  padding: 11px;
+  border: none;
+  border-radius: 4px;
+  background: #3f6b4a;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-gerar:hover {
+  background: #365d40;
+}
+
+.btn-gerar:active {
+  background: #2e4f36;
+}
