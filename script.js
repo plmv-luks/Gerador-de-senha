@@ -57,7 +57,10 @@ const PALAVRAS = ['casa', 'carro', 'gato', 'cachorro', 'arvore', 'rio', 'montanh
 
 function indiceAleatorio(max) {
   const buf = new Uint32Array(1)
-  crypto.getRandomValues(buf)
+  const limite = 2 ** 32 - (2 ** 32 % max)
+  do {
+    crypto.getRandomValues(buf)
+  } while (buf[0] >= limite)
   return buf[0] % max
 }
 
@@ -82,6 +85,13 @@ function lerMin(input, max) {
   return Math.max(0, Math.min(v, max))
 }
 
+function erro(msg) {
+  campoSenha.value = ''
+  labelForca.textContent = msg
+  barraForca.style.width = '0%'
+  return null
+}
+
 function gerarSenhaAleatoria() {
   const tamanhoTotal = Number(tamanho.value)
   const excluir = new Set(campoExcluir.value.split(''))
@@ -95,20 +105,10 @@ function gerarSenhaAleatoria() {
   const extra = filtraCaracteres(campoIncluir.value, excluir)
   const alfabetoCombinado = tipos.map(t => t.chars).join('') + extra
 
-  if (!alfabetoCombinado) {
-    campoSenha.value = ''
-    labelForca.textContent = 'marque pelo menos uma opção'
-    barraForca.style.width = '0%'
-    return
-  }
+  if (!alfabetoCombinado) return erro('marque pelo menos uma opção')
 
   const somaMinimos = tipos.reduce((soma, t) => soma + t.min, 0)
-  if (somaMinimos > tamanhoTotal) {
-    campoSenha.value = ''
-    labelForca.textContent = 'os mínimos somados passam do tamanho'
-    barraForca.style.width = '0%'
-    return
-  }
+  if (somaMinimos > tamanhoTotal) return erro('os mínimos somados passam do tamanho')
 
   const resultado = []
   for (const tipo of tipos) {
@@ -120,8 +120,7 @@ function gerarSenhaAleatoria() {
   }
 
   const senha = embaralha(resultado).join('')
-  campoSenha.value = senha
-  atualizarForca(senha.length * Math.log2(alfabetoCombinado.length))
+  return { texto: senha, entropia: senha.length * Math.log2(alfabetoCombinado.length) }
 }
 
 function gerarFrase() {
@@ -135,8 +134,7 @@ function gerarFrase() {
     entropia += Math.log2(90)
   }
 
-  campoSenha.value = partes.join(separador.value)
-  atualizarForca(entropia)
+  return { texto: partes.join(separador.value), entropia }
 }
 
 function atualizarForca(entropia) {
@@ -156,9 +154,15 @@ function atualizarForca(entropia) {
   labelForca.textContent = texto
 }
 
+function gerarUma() {
+  return painelFrase.hidden ? gerarSenhaAleatoria() : gerarFrase()
+}
+
 function gerar() {
-  if (painelFrase.hidden) gerarSenhaAleatoria()
-  else gerarFrase()
+  const r = gerarUma()
+  if (!r) return
+  campoSenha.value = r.texto
+  atualizarForca(r.entropia)
 }
 
 async function copiarSenha() {
