@@ -2,31 +2,109 @@
   box-sizing: border-box;
 }
 
+:root {
+  color-scheme: light;
+  --fundo: #f2f1ed;
+  --texto: #26261f;
+  --card: #ffffff;
+  --borda: #d8d6cc;
+  --campo: #f9f8f4;
+  --trilho: #eceae2;
+  --suave: #6b6a5f;
+  --verde-btn: #3f6b4a;
+  --verde-txt: #3f6b4a;
+  --verde-hover: #365d40;
+  --verde-ativo: #2e4f36;
+  --fraca: #c0392b;
+  --razoavel: #b7791f;
+  --forte: #4d7c0f;
+  --muito-forte: #3f6b4a;
+}
+
+:root[data-tema="escuro"] {
+  color-scheme: dark;
+  --fundo: #17181a;
+  --texto: #e6e5dd;
+  --card: #212326;
+  --borda: #3a3c40;
+  --campo: #1b1c1e;
+  --trilho: #333538;
+  --suave: #9a998e;
+  --verde-txt: #7fbf8e;
+  --verde-hover: #4a7d57;
+  --verde-ativo: #386347;
+  --fraca: #e05a4a;
+  --razoavel: #d19a2e;
+  --forte: #7cb342;
+  --muito-forte: #5fae73;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-tema="claro"]) {
+    color-scheme: dark;
+    --fundo: #17181a;
+    --texto: #e6e5dd;
+    --card: #212326;
+    --borda: #3a3c40;
+    --campo: #1b1c1e;
+    --trilho: #333538;
+    --suave: #9a998e;
+    --verde-txt: #7fbf8e;
+    --verde-hover: #4a7d57;
+    --verde-ativo: #386347;
+    --fraca: #e05a4a;
+    --razoavel: #d19a2e;
+    --forte: #7cb342;
+    --muito-forte: #5fae73;
+  }
+}
+
 body {
   margin: 0;
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f2f1ed;
+  background: var(--fundo);
   font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
-  color: #26261f;
+  color: var(--texto);
   padding: 24px;
 }
 
 .card {
   width: 100%;
   max-width: 420px;
-  background: #ffffff;
-  border: 1px solid #d8d6cc;
+  background: var(--card);
+  border: 1px solid var(--borda);
   border-radius: 6px;
   padding: 24px;
 }
 
+.topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
 h1 {
-  margin: 0 0 18px;
+  margin: 0;
   font-size: 20px;
   font-weight: 600;
+}
+
+#btnTema {
+  padding: 5px 10px;
+  border: 1px solid var(--borda);
+  border-radius: 4px;
+  background: var(--card);
+  color: var(--texto);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+#btnTema:hover {
+  background: var(--fundo);
 }
 
 .modos {
@@ -38,17 +116,17 @@ h1 {
 .modo {
   flex: 1;
   padding: 8px;
-  border: 1px solid #d8d6cc;
+  border: 1px solid var(--borda);
   border-radius: 4px;
-  background: #f2f1ed;
-  color: #26261f;
+  background: var(--fundo);
+  color: var(--texto);
   font-size: 13px;
   cursor: pointer;
 }
 
 .modo.ativo {
-  background: #3f6b4a;
-  border-color: #3f6b4a;
+  background: var(--verde-btn);
+  border-color: var(--verde-btn);
   color: #fff;
 }
 
@@ -62,9 +140,9 @@ h1 {
   flex: 1;
   padding: 10px 12px;
   border-radius: 4px;
-  border: 1px solid #d8d6cc;
-  background: #f9f8f4;
-  color: #26261f;
+  border: 1px solid var(--borda);
+  background: var(--campo);
+  color: var(--texto);
   font-size: 15px;
   font-family: 'Courier New', monospace;
   min-width: 0;
@@ -72,23 +150,23 @@ h1 {
 
 #btnCopiar {
   padding: 0 14px;
-  border: 1px solid #d8d6cc;
+  border: 1px solid var(--borda);
   border-radius: 4px;
-  background: #fff;
-  color: #26261f;
+  background: var(--card);
+  color: var(--texto);
   font-size: 13px;
   cursor: pointer;
 }
 
 #btnCopiar:hover {
-  background: #f2f1ed;
+  background: var(--fundo);
 }
 
 .aviso-copiado {
   height: 14px;
   margin: 4px 0 14px;
   font-size: 12px;
-  color: #3f6b4a;
+  color: var(--verde-txt);
   opacity: 0;
   transition: opacity 0.15s;
 }
@@ -100,7 +178,7 @@ h1 {
 .forca {
   height: 5px;
   border-radius: 3px;
-  background: #eceae2;
+  background: var(--trilho);
   overflow: hidden;
   margin-bottom: 4px;
 }
@@ -114,7 +192,7 @@ h1 {
 .label-forca {
   display: block;
   font-size: 12px;
-  color: #6b6a5f;
+  color: var(--suave);
   margin-bottom: 18px;
 }
 
@@ -139,7 +217,7 @@ h1 {
 
 #valorTamanho,
 #valorQtdPalavras {
-  color: #3f6b4a;
+  color: var(--verde-txt);
   font-weight: 600;
 }
 
@@ -162,10 +240,12 @@ h1 {
 .campo-min {
   width: 46px;
   padding: 4px 6px;
-  border: 1px solid #d8d6cc;
+  border: 1px solid var(--borda);
   border-radius: 4px;
   text-align: center;
   font-size: 13px;
+  background: var(--campo);
+  color: var(--texto);
 }
 
 .campo-min:disabled {
@@ -174,8 +254,10 @@ h1 {
 
 .opcao-texto input[type="text"] {
   width: 100%;
+  background: var(--campo);
+  color: var(--texto);
   padding: 8px 10px;
-  border: 1px solid #d8d6cc;
+  border: 1px solid var(--borda);
   border-radius: 4px;
   font-size: 13px;
 }
@@ -183,21 +265,22 @@ h1 {
 select#separador {
   width: 100%;
   padding: 8px 10px;
-  border: 1px solid #d8d6cc;
+  border: 1px solid var(--borda);
   border-radius: 4px;
   font-size: 13px;
-  background: #fff;
+  background: var(--campo);
+  color: var(--texto);
 }
 
 input[type="range"] {
   width: 100%;
-  accent-color: #3f6b4a;
+  accent-color: var(--verde-txt);
 }
 
 input[type="checkbox"] {
   width: 15px;
   height: 15px;
-  accent-color: #3f6b4a;
+  accent-color: var(--verde-txt);
 }
 
 .btn-gerar {
@@ -206,7 +289,7 @@ input[type="checkbox"] {
   padding: 11px;
   border: none;
   border-radius: 4px;
-  background: #3f6b4a;
+  background: var(--verde-btn);
   color: #fff;
   font-size: 15px;
   font-weight: 600;
@@ -214,9 +297,9 @@ input[type="checkbox"] {
 }
 
 .btn-gerar:hover {
-  background: #365d40;
+  background: var(--verde-hover);
 }
 
 .btn-gerar:active {
-  background: #2e4f36;
+  background: var(--verde-ativo);
 }

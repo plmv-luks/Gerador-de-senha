@@ -1,3 +1,4 @@
+const btnTema = document.getElementById('btnTema')
 const btnModoSenha = document.getElementById('btnModoSenha')
 const btnModoFrase = document.getElementById('btnModoFrase')
 const painelSenha = document.getElementById('painelSenha')
@@ -140,13 +141,13 @@ function gerarFrase() {
 function atualizarForca(entropia) {
   let porcentagem, cor, texto
   if (entropia < 40) {
-    porcentagem = 25; cor = '#c0392b'; texto = 'fraca'
+    porcentagem = 25; cor = 'var(--fraca)'; texto = 'fraca'
   } else if (entropia < 60) {
-    porcentagem = 50; cor = '#b7791f'; texto = 'razoável'
+    porcentagem = 50; cor = 'var(--razoavel)'; texto = 'razoável'
   } else if (entropia < 90) {
-    porcentagem = 75; cor = '#4d7c0f'; texto = 'forte'
+    porcentagem = 75; cor = 'var(--forte)'; texto = 'forte'
   } else {
-    porcentagem = 100; cor = '#3f6b4a'; texto = 'muito forte'
+    porcentagem = 100; cor = 'var(--muito-forte)'; texto = 'muito forte'
   }
 
   barraForca.style.width = porcentagem + '%'
@@ -182,6 +183,23 @@ function trocaModo(mostrarFrase) {
   btnModoFrase.setAttribute('aria-pressed', String(mostrarFrase))
   gerar()
 }
+
+const escuroDoSistema = matchMedia('(prefers-color-scheme: dark)')
+
+function temaAtual() {
+  return document.documentElement.dataset.tema || (escuroDoSistema.matches ? 'escuro' : 'claro')
+}
+
+function rotuloTema() {
+  btnTema.textContent = temaAtual() === 'escuro' ? 'claro' : 'escuro'
+}
+
+btnTema.addEventListener('click', () => {
+  document.documentElement.dataset.tema = temaAtual() === 'escuro' ? 'claro' : 'escuro'
+  rotuloTema()
+})
+escuroDoSistema.addEventListener('change', rotuloTema)
+rotuloTema()
 
 btnModoSenha.addEventListener('click', () => trocaModo(false))
 btnModoFrase.addEventListener('click', () => trocaModo(true))
