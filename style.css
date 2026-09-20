@@ -303,3 +303,50 @@ input[type="checkbox"] {
 .btn-gerar:active {
   background: var(--verde-ativo);
 }
+
+#historico {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--borda);
+}
+
+.hist-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 13px;
+  color: var(--suave);
+}
+
+.hist-topo button,
+#listaHistorico button {
+  padding: 3px 8px;
+  border: 1px solid var(--borda);
+  border-radius: 4px;
+  background: var(--card);
+  color: var(--texto);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+#listaHistorico {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#listaHistorico li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+#listaHistorico span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+}

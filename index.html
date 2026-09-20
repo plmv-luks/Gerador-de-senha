@@ -86,7 +86,23 @@
       </div>
     </section>
 
+    <div class="linha-tipo">
+      <label for="quantidade">Quantidade de senhas</label>
+      <input type="number" id="quantidade" class="campo-min" min="1" max="20" value="1">
+    </div>
+
     <button id="btnGerar" class="btn-gerar">Gerar</button>
+
+    <section id="historico" hidden>
+      <div class="hist-topo">
+        <span>Histórico</span>
+        <span>
+          <button type="button" id="btnCopiarTodas">copiar todas</button>
+          <button type="button" id="btnLimpar">limpar</button>
+        </span>
+      </div>
+      <ul id="listaHistorico"></ul>
+    </section>
   </main>
 
   <script src="script.js"></script>

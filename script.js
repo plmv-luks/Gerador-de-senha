@@ -31,6 +31,12 @@ const valorQtdPalavras = document.getElementById('valorQtdPalavras')
 const separador = document.getElementById('separador')
 const numeroFinal = document.getElementById('numeroFinal')
 
+const quantidade = document.getElementById('quantidade')
+const historico = document.getElementById('historico')
+const listaHistorico = document.getElementById('listaHistorico')
+const btnCopiarTodas = document.getElementById('btnCopiarTodas')
+const btnLimpar = document.getElementById('btnLimpar')
+
 const CONJUNTOS = {
   maiusculas: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
   minusculas: 'abcdefghijklmnopqrstuvwxyz',
@@ -166,12 +172,44 @@ function gerar() {
   atualizarForca(r.entropia)
 }
 
-async function copiarSenha() {
-  if (!campoSenha.value) return
+async function copiar(texto) {
+  if (!texto) return
 
-  await navigator.clipboard.writeText(campoSenha.value)
+  await navigator.clipboard.writeText(texto)
   avisoCopiado.classList.add('show')
   setTimeout(() => avisoCopiado.classList.remove('show'), 1500)
+}
+
+const MAX_HISTORICO = 20
+let itens = []
+
+function desenhaHistorico() {
+  listaHistorico.replaceChildren(...itens.map(texto => {
+    const li = document.createElement('li')
+    const span = document.createElement('span')
+    span.textContent = texto
+    const btn = document.createElement('button')
+    btn.type = 'button'
+    btn.textContent = 'copiar'
+    btn.addEventListener('click', () => copiar(texto))
+    li.append(span, btn)
+    return li
+  }))
+  historico.hidden = !itens.length
+}
+
+function gerarVarias() {
+  const qtd = Math.max(1, Math.min(Number(quantidade.value) || 1, 20))
+  const novas = []
+  for (let i = 0; i < qtd; i++) {
+    const r = gerarUma()
+    if (!r) return
+    novas.push(r)
+  }
+  campoSenha.value = novas[0].texto
+  atualizarForca(novas[0].entropia)
+  itens = [...novas.map(r => r.texto), ...itens].slice(0, MAX_HISTORICO)
+  desenhaHistorico()
 }
 
 function trocaModo(mostrarFrase) {
@@ -214,8 +252,13 @@ qtdPalavras.addEventListener('input', () => {
   gerar()
 })
 
-btnGerar.addEventListener('click', gerar)
-btnCopiar.addEventListener('click', copiarSenha)
+btnGerar.addEventListener('click', gerarVarias)
+btnCopiar.addEventListener('click', () => copiar(campoSenha.value))
+btnCopiarTodas.addEventListener('click', () => copiar(itens.join('\n')))
+btnLimpar.addEventListener('click', () => {
+  itens = []
+  desenhaHistorico()
+})
 
 for (const [check, min] of [[checkMaiusculas, minMaiusculas], [checkMinusculas, minMinusculas], [checkNumeros, minNumeros], [checkSimbolos, minSimbolos]]) {
   check.addEventListener('change', () => {
