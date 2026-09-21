@@ -260,7 +260,9 @@ btnLimpar.addEventListener('click', () => {
   desenhaHistorico()
 })
 
-for (const [check, min] of [[checkMaiusculas, minMaiusculas], [checkMinusculas, minMinusculas], [checkNumeros, minNumeros], [checkSimbolos, minSimbolos]]) {
+const PARES = [[checkMaiusculas, minMaiusculas], [checkMinusculas, minMinusculas], [checkNumeros, minNumeros], [checkSimbolos, minSimbolos]]
+
+for (const [check, min] of PARES) {
   check.addEventListener('change', () => {
     min.disabled = !check.checked
     gerar()
@@ -274,4 +276,44 @@ for (const el of [checkSemAmbiguos, campoIncluir, campoExcluir, separador, numer
   el.addEventListener('change', gerar)
 }
 
+const CHAVE = 'gerador-config'
+const CONTROLES = [tamanho, checkMaiusculas, checkMinusculas, checkNumeros, checkSimbolos,
+  minMaiusculas, minMinusculas, minNumeros, minSimbolos, checkSemAmbiguos, campoIncluir, campoExcluir,
+  qtdPalavras, separador, numeroFinal, quantidade]
+
+function salvaConfig() {
+  const cfg = { modo: painelFrase.hidden ? 'senha' : 'frase', tema: document.documentElement.dataset.tema }
+  for (const el of CONTROLES) cfg[el.id] = el.type === 'checkbox' ? el.checked : el.value
+  try {
+    localStorage.setItem(CHAVE, JSON.stringify(cfg))
+  } catch {}
+}
+
+function carregaConfig() {
+  try {
+    const cfg = JSON.parse(localStorage.getItem(CHAVE))
+    if (!cfg || typeof cfg !== 'object') return
+
+    for (const el of CONTROLES) {
+      if (!(el.id in cfg)) continue
+      if (el.type === 'checkbox') el.checked = cfg[el.id] === true
+      else if (el.tagName !== 'SELECT' || [...el.options].some(o => o.value === cfg[el.id])) el.value = cfg[el.id]
+    }
+    valorTamanho.textContent = tamanho.value
+    valorQtdPalavras.textContent = qtdPalavras.value
+    for (const [check, min] of PARES) min.disabled = !check.checked
+
+    if (cfg.tema === 'claro' || cfg.tema === 'escuro') document.documentElement.dataset.tema = cfg.tema
+    rotuloTema()
+    trocaModo(cfg.modo === 'frase')
+  } catch {}
+}
+
+document.addEventListener('input', salvaConfig)
+document.addEventListener('change', salvaConfig)
+document.addEventListener('click', e => {
+  if (e.target.closest('.modos, #btnTema')) salvaConfig()
+})
+
+carregaConfig()
 gerar()
