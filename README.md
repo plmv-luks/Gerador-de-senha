@@ -13,7 +13,9 @@ mostra a força da senha com base na entropia, e dá pra gerar várias de uma ve
 
 ## usar
 
-não precisa instalar nada, só clonar e abrir o `index.html`:
+acessa direto pelo navegador: https://plmv-luks.github.io/Gerador-de-senha/
+
+ou, se preferir rodar local, só clonar e abrir o `index.html`:
 
 ```
 git clone https://github.com/plmv-luks/Gerador-de-senha.git
